@@ -100,7 +100,7 @@ func ProcessMessage(msg *imap.Message, section imap.BodySectionName, config Conf
 	// Get the whole message body
 	r := msg.GetBody(&section)
 	if r == nil {
-		log.Fatal("Server didn't returned message body")
+		log.Printf("Server didn't returned message body for message %d - %s", msg.Uid, msg.Envelope.Subject)
 	}
 	// Create a new mail reader
 	mr, err := mail.CreateReader(r)
@@ -142,7 +142,8 @@ func DownloadAttachmentsFromPage(client *client.Client, from uint32, to uint32, 
 
 	for msg := range messages {
 		if err := ProcessMessage(msg, section, config); err != nil {
-			return fmt.Errorf("failed to process message %d: %w", msg.Uid, err)
+			log.Printf("failed to process message %d: %+v\n", msg.Uid, err)
+			continue
 		}
 	}
 
