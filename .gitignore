@@ -2,3 +2,4 @@ config.yml
 attachments
 .DS_Store
 .idea
+bin
