@@ -206,7 +206,7 @@ func main() {
 
 	if _, err := os.Stat(config.Download.AttachmentsDirectory); os.IsNotExist(err) {
 		if err := os.MkdirAll(config.Download.AttachmentsDirectory, os.ModePerm); err != nil {
-			log.Fatalf("failed to create attachments directory: %+v", err)
+			log.Fatalf("failed to create attachments directory %s: %+v", config.Download.AttachmentsDirectory, err)
 		}
 	}
 
@@ -233,9 +233,10 @@ func main() {
 	}
 	log.Println("Logged in")
 
+	log.Printf("Attachments Directory %s\n", config.Download.AttachmentsDirectory)
 	if err := DownloadAttachmentsFromMailbox(c, "INBOX", config); err != nil {
 		log.Fatalf("failed to download attachments: %+v\n", err)
 	}
 
-	log.Println("Done!")
+	log.Printf("Finished processing emails. Attachments are in %s\n", config.Download.AttachmentsDirectory)
 }
