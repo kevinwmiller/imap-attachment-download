@@ -1,4 +1,4 @@
-module webmail
+module imap-attachment-download
 
 go 1.16
 
