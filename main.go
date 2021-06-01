@@ -31,6 +31,7 @@ type Config struct {
 		AttachmentsDirectory string
 		PageSize             uint32
 		Pattern              string
+		From                 uint32
 	}
 	Debug bool
 }
@@ -162,6 +163,10 @@ func DownloadAttachmentsFromMailbox(client *client.Client, mailbox string, confi
 	pageSize := config.Download.PageSize
 
 	from := uint32(1)
+	if config.Download.From != 0 {
+		from = config.Download.From
+	}
+
 	to := mbox.Messages
 
 	for from <= mbox.Messages {
